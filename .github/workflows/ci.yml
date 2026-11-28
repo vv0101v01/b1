@@ -30,6 +30,9 @@ jobs:
       - name: Toolchain versions
         run: moon version --all
 
+      - name: Refresh mooncakes registry
+        run: moon update
+
       - name: Format check
         run: moon fmt --check
 
