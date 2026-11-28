@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  moonbit:
+    name: moonbit-stable
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install MoonBit (latest stable)
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+
+      - name: Toolchain versions
+        run: moon version --all
+
+      - name: Format check
+        run: moon fmt --check
+
+      - name: Dependency plumbing check (zz_deps / moon.pkg)
+        run: |
+          moon run cmd/tools --target native -- deps --check
+          moon run cmd/tools --target native -- qualify --check
+
+      - name: Static check (deny warnings)
+        run: moon check --deny-warn
+
+      - name: Unit tests
+        run: moon test
+
+      - name: Debt audit (dead code / duplicate bodies, report only)
+        run: |
+          moon run cmd/tools --target native -- stats
+          moon run cmd/tools --target native -- dups
+
+      - name: Report smoke run (must contain zero FAIL)
+        run: |
+          moon run cmd/main | tee report_ci.txt
+          if grep -q '\[FAIL\]' report_ci.txt; then
+            echo "::error::report contains [FAIL] lines"
+            exit 1
+          fi
+          grep -c 'PASS' report_ci.txt
+          for n in 37 64 65 51 49 30 33 23 75; do
+            grep -q "PASS = $n" report_ci.txt || echo "::warning::expected PASS = $n not found"
+          done

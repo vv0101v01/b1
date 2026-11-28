@@ -1,0 +1,14 @@
+# MoonBit build artifacts
+target/
+_build/
+.moon/
+.mooncakes/
+*.mbti
+
+# misc
+.DS_Store
+*.tmp
+report_ci.txt
+
+# MoonBit dependencies cache
+.mooncakes/

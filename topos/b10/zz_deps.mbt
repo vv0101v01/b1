@@ -1,0 +1,57 @@
+///|
+// 本套件所有檔案共用的跨套件名稱別名（using），由 cmd/tools 維護，請勿手改。
+
+///|
+using @b8 {
+  b8_cat_disc,
+  b8_lan,
+  b8_nat_count,
+  b8_pow_int,
+  b8_ps_const,
+  b8_ps_coprod,
+  b8_ps_eq,
+  b8_ps_make,
+  b8_ps_prod,
+  b8_ps_yoneda,
+  b8_pull,
+  type B8Fun,
+  type B8PS,
+}
+
+///|
+using @b9 {
+  b9_all_sieves,
+  b9_cech_diff,
+  b9_cech_dim,
+  b9_cech_h,
+  b9_classify_check,
+  b9_comp_count,
+  b9_coprod_disjoint,
+  b9_coprod_universal,
+  b9_cover_inter,
+  b9_density_check,
+  b9_groth_spatial,
+  b9_gset_reg,
+  b9_is_sheaf,
+  b9_lex_ok,
+  b9_orbit_count,
+  b9_points_distinguished,
+  b9_pop,
+  b9_rank_mod,
+  b9_represent,
+  b9_site_incl,
+  b9_stab_size,
+  b9_sub_count,
+  b9_sub_count_sh,
+  b9_subsets,
+  b9_top_find,
+  b9_top_inter,
+  b9_top_union,
+  b9_topology_ok,
+  b9_torsor_aut,
+  type B9Cover,
+  type B9GSet,
+  type B9Group,
+  type B9Site,
+  type B9Top,
+}

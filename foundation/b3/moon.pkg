@@ -1,0 +1,5 @@
+import {
+  "arena/langlands/core",
+  "arena/langlands/foundation/b1",
+  "arena/langlands/foundation/b2",
+}
