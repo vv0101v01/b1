@@ -9,6 +9,9 @@
 ///   stats            行數／宣告數統計
 
 ///|
+const USAGE : String = "用法: moon run cmd/tools --target native -- deps|qualify|audit|dups|stats|why <套件> [--check]"
+
+///|
 fn main {
   let argv = @env.args()
   let mut root = "."
@@ -36,27 +39,7 @@ fn main {
     "dups" => run_dups(root)
     "stats" => run_stats(root)
     "why" => run_why(root, arg1)
-    "key" => {
-      let idx = build_index(root)
-      let _ = idx
-      let parts = arg1.split(":").collect()
-      let file = parts[0].to_owned()
-      let fname = if parts.length() > 1 { parts[1].to_owned() } else { "" }
-      let text = read_text(root + "/" + file)
-      let src = make_source("", file, text)
-      for d in parse_decls("", file, text) {
-        if d.name == fname {
-          match body_key(src, d.pos) {
-            Some(k) => println(k)
-            None => println("no body")
-          }
-        }
-      }
-    }
-    _ =>
-      println(
-        "用法: moon run cmd/tools --target native -- deps|qualify|audit|dups|stats|why <套件> [--check]",
-      )
+    _ => println(USAGE)
   }
 }
 
